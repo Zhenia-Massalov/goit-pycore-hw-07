@@ -131,6 +131,21 @@ def add_contact(args, book: AddressBook):
         record.add_phone(phone)
     return message
 
+@input_error
+def show_phone(args, book):
+    name = args[0]
+    record = book.find(name)
+    if record:
+        return f"{name}: {', '.join(phone.value for phone in record.phones)}"
+    else:
+        return f"Contact {name} not found."
+
+@input_error
+def show_all_contacts(book):
+    if not book.data:
+        return "No contacts found."
+    return "\n".join(str(record) for record in book.data.values())
+
 def main():
     book = AddressBook()
     print("Welcome to the assistant bot!")
